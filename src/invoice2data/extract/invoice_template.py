@@ -207,26 +207,26 @@ class InvoiceTemplate(OrderedDict):
         for plugin_keyword, plugin_func in PLUGIN_MAPPING.items():
             if plugin_keyword in self.keys():
                 plugin_func.extract(self, optimized_str, path, output)
-
+        return output
         # If required fields were found, return output, else log error.
-        if "required_fields" not in self.keys():
-            required_fields = ["date", "amount", "invoice_number", "issuer"]
-        else:
-            required_fields = []
-            for v in self["required_fields"]:
-                required_fields.append(v)
+#         if "required_fields" not in self.keys():
+#             required_fields = ["date", "amount", "invoice_number", "issuer"]
+#         else:
+#             required_fields = []
+#             for v in self["required_fields"]:
+#                 required_fields.append(v)
 
-        if set(required_fields).issubset(output.keys()):
-            output["desc"] = "Invoice from %s" % (self["issuer"])
-            logger.debug(output)
-            return output
-        else:
-            fields = list(set(output.keys()))
-            logger.error(
-                "Unable to match all required fields. "
-                "The required fields are: {0}. "
-                "Output contains the following fields: {1}.".format(
-                    required_fields, fields
-                )
-            )
-            return None
+#         if set(required_fields).issubset(output.keys()):
+#             output["desc"] = "Invoice from %s" % (self["issuer"])
+#             logger.debug(output)
+#             return output
+#         else:
+#             fields = list(set(output.keys()))
+#             logger.error(
+#                 "Unable to match all required fields. "
+#                 "The required fields are: {0}. "
+#                 "Output contains the following fields: {1}.".format(
+#                     required_fields, fields
+#                 )
+#             )
+#             return None
